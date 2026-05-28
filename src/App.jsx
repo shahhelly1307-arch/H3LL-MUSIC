@@ -26,13 +26,24 @@ import progressBarStars from '../assets/progress_bar_stars.png';
 import star from '../assets/star.png';
 import starSelected from '../assets/star_selected.png';
 // --- BROWSER COMPATIBILITY FALLBACK ---
+// --- BROWSER COMPATIBILITY FALLBACK ---
 if (!window.cupid) {
   window.cupid = {
-    resize: () => {}, minimize: () => {}, maximize: () => {}, close: () => {},
-    getLocalPlaylist: async () => { try { const res = await fetch('/audio/playlist.json'); return await res.json(); } catch (e) { return []; } },
-    getLocalAudioPath: (file) => `/audio/${file}`
+    // ... baaki methods
+    getLocalPlaylist: async () => { 
+        console.log("Fetching mock data from /audio/playlist.json");
+        try { 
+            const res = await fetch('/audio/playlist.json'); 
+            return await res.json(); 
+        } catch (e) { 
+            console.error("Fetch failed, returning demo tracks");
+            return [{ id: 1, title: 'Demo Song', artist: 'Artist', path: 'test.mp3' }]; 
+        } 
+    },
+    // ...
   };
 }
+
 
 
 function useResize(corner) {
@@ -227,9 +238,8 @@ export default function App() {
   const [showDebug] = useState(false);
   const [localTracks, setLocalTracks] = useState([]);
 
-  const loadLocalPlaylist = useCallback(async () => {
-      const loadLocalPlaylist = useCallback(async () => {
-    // 1. Check karein agar Electron environment hai
+    const loadLocalPlaylist = useCallback(async () => {
+    // 1. Agar Electron environment hai (Desktop App)
     if (window.cupid?.getLocalPlaylist) {
       try {
         const tracks = await window.cupid.getLocalPlaylist();
@@ -238,14 +248,15 @@ export default function App() {
         console.error('Failed to load local playlist:', err);
       }
     } else {
-      // 2. Agar browser hai, toh MOCK DATA load karein (Testing ke liye)
+      // 2. Agar Browser hai, toh Mock Data load karein taaki player khali na dikhe
       console.warn("Running in Browser: Loading mock tracks.");
       setLocalTracks([
-        { id: 1, title: 'Sample Track 1', artist: 'Artist A', path: 'path/to/song1.mp3' },
-        { id: 2, title: 'Sample Track 2', artist: 'Artist B', path: 'path/to/song2.mp3' }
+        { id: 1, title: 'Sample Track 1', artist: 'Artist A', path: '/audio/test.mp3' },
+        { id: 2, title: 'Sample Track 2', artist: 'Artist B', path: '/audio/test2.mp3' }
       ]);
     }
   }, []);
+
 
 
   useEffect(() => { loadLocalPlaylist(); }, [loadLocalPlaylist]);
