@@ -25,6 +25,15 @@ import {
 import progressBarStars from '../assets/progress_bar_stars.png';
 import star from '../assets/star.png';
 import starSelected from '../assets/star_selected.png';
+// --- BROWSER COMPATIBILITY FALLBACK ---
+if (!window.cupid) {
+  window.cupid = {
+    resize: () => {}, minimize: () => {}, maximize: () => {}, close: () => {},
+    getLocalPlaylist: async () => { try { const res = await fetch('/audio/playlist.json'); return await res.json(); } catch (e) { return []; } },
+    getLocalAudioPath: (file) => `/audio/${file}`
+  };
+}
+
 
 function useResize(corner) {
   const onMouseDown = useCallback((e) => {
