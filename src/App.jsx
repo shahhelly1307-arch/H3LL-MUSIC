@@ -639,19 +639,27 @@ export default function App() {
 
       {/* Volume bar layers — shown on hover or drag */}
       {(volumeHovered || volumeDragging) && (
-        <>
-          <img src={assets.volumeBarLow} className="layer layer-ui volume-bar-layer" alt="" draggable={false} />
-          <img
-            src={assets.volumeBarHigh}
-            className="layer layer-ui volume-bar-layer"
-            alt=""
-            draggable={false}
-            style={{
-              clipPath: `inset(${((1 - (muted ? 0 : volume)) * (420 - 338) / 512 + 338 / 512) * 100}% 0 0 0)`,
-            }}
-          />
-        </>
-      )}
+  <>
+    <img 
+      src={assets.volumeBarLow} 
+      className="layer layer-ui volume-bar-layer" 
+      alt="" 
+      draggable={false} 
+    />
+    <img
+      src={assets.volumeBarHigh}
+      className="layer layer-ui volume-bar-layer"
+      alt=""
+      draggable={false}
+      style={{
+        // Percentage based clipping: 0% (volume 1) to 100% (volume 0)
+        // Agar aapke image assets mein volume bar neeche se upar bhar raha hai:
+        clipPath: `inset(${(1 - (muted ? 0 : volume)) * 100}% 0 0 0)`,
+      }}
+    />
+  </>
+)}
+
 
       {/* Volume icon — hover to reveal bar */}
       <div
