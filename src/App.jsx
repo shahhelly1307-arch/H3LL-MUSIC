@@ -228,14 +228,25 @@ export default function App() {
   const [localTracks, setLocalTracks] = useState([]);
 
   const loadLocalPlaylist = useCallback(async () => {
-    if (!window.cupid?.getLocalPlaylist) return;
-    try {
-      const tracks = await window.cupid.getLocalPlaylist();
-      setLocalTracks(Array.isArray(tracks) ? tracks : []);
-    } catch (err) {
-      console.error('Failed to load local playlist:', err);
+      const loadLocalPlaylist = useCallback(async () => {
+    // 1. Check karein agar Electron environment hai
+    if (window.cupid?.getLocalPlaylist) {
+      try {
+        const tracks = await window.cupid.getLocalPlaylist();
+        setLocalTracks(Array.isArray(tracks) ? tracks : []);
+      } catch (err) {
+        console.error('Failed to load local playlist:', err);
+      }
+    } else {
+      // 2. Agar browser hai, toh MOCK DATA load karein (Testing ke liye)
+      console.warn("Running in Browser: Loading mock tracks.");
+      setLocalTracks([
+        { id: 1, title: 'Sample Track 1', artist: 'Artist A', path: 'path/to/song1.mp3' },
+        { id: 2, title: 'Sample Track 2', artist: 'Artist B', path: 'path/to/song2.mp3' }
+      ]);
     }
   }, []);
+
 
   useEffect(() => { loadLocalPlaylist(); }, [loadLocalPlaylist]);
 
