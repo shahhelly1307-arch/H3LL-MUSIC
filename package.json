@@ -1,4 +1,4 @@
-```json id="cleanpkg"
+```json
 {
   "name": "cupid-player",
   "version": "1.0.0",
@@ -10,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "music-metadata": "^11.12.3",
-    "music-metadata-browser": "^2.5.11",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "music-metadata": "^11.12.3",
+    "music-metadata-browser": "^2.5.11"
   },
   "devDependencies": {
-    "@vitejs/plugin-basic-ssl": "^2.3.0",
+    "vite": "^6.0.7",
     "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.7"
+    "@vitejs/plugin-basic-ssl": "^2.3.0"
   }
 }
