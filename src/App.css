@@ -1,40 +1,10 @@
-html,
-body,
-#root
-.player {
-  transform: scale(0.35);
-  transform-origin: top center;
-}
-{
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  min-height: 100vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #000;
-  overflow: hidden;
-}
-
 .player {
   position: relative;
-
-  width: 520px;
-  height: 520px;
-
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-
-  border-radius: 8px;
-
-  image-rendering: pixelated;
-
+  border-radius: calc(5 / 306 * 100vw); /* match frame's pixel-art rounded corners */
+  clip-path: inset(0 0 0 calc(3 / 306 * 100vw));
   --color-title: #78364F;
   --color-primary: #5a3a4a;
   --color-secondary: #8a6a7a;
@@ -48,16 +18,18 @@ body {
   --color-panel-text: #C8D3F6;
 }
 
+
 .layer {
   position: absolute;
-
-  /* Converted from vw to fixed pixels */
-  top: -39px;
-  left: -187px;
-
-  width: 894px;
-  height: 894px;
-
+  /* All values based on vw so everything scales from one reference.
+     Canvas is 526x526, visible frame is 306x497.
+     Image size: 526/306 * 100vw = 171.9vw
+     Left offset: 110/306 * 100vw = 35.95vw
+     Top offset: 23/306 * 100vw = 7.52vw */
+  top: calc(-23 / 306 * 100vw); /* crop at bow top */
+  left: -35.95vw;
+  width: 171.9vw;
+  height: 171.9vw;
   image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
@@ -66,125 +38,112 @@ body {
 .layer.clickable {
   pointer-events: auto;
   cursor: pointer;
+  -webkit-app-region: no-drag;
 }
 
 .window-title {
   position: absolute;
-
-  left: 41px;
-  top: 46px;
-
+  left: calc((134 - 110) / 306 * 100vw);
+  top: calc((50 - 23) / 306 * 100vw);
   font-family: 'Rainyhearts', monospace;
-  font-size: 34px;
-
+  font-size: calc(20 / 306 * 100vw);
   color: var(--color-title);
-
   z-index: 50;
   pointer-events: none;
   user-select: none;
 }
 
-/* Invisible drag region for Electron */
+/* Invisible drag region for moving the frameless window */
 .drag-region {
   position: absolute;
-
-  top: 14px;
+  top: calc(8 / 306 * 100vw); /* start below the bow, at the frame border */
   left: 0;
-
   width: 100%;
-  height: 85px;
-
+  height: calc(50 / 306 * 100vw); /* top area of frame for dragging */
   z-index: 100;
+  -webkit-app-region: drag;
+
 }
 
-/* Custom resize handles */
+/* Custom resize handles at frame corners (below bow) */
 .resize-handle {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: calc(12 / 306 * 100vw);
+  height: calc(12 / 306 * 100vw);
   z-index: 200;
+
+  -webkit-app-region: no-drag;
   pointer-events: auto;
 }
 
-/* Window control click targets */
+/* Window control click targets — positioned over the button icons */
+/* Positions relative to 306-wide visible frame: (canvasX - 110) / 306 */
+/* Y relative to 497-tall visible frame: (canvasY - 23) / 497 */
 .btn {
   position: absolute;
-  width: 34px;
-  height: 36px;
-
+  width: calc(20 / 306 * 100vw);
+  height: calc(21 / 306 * 100vw);
   z-index: 150;
   cursor: pointer;
-  border-radius: 7px;
+  border-radius: calc(4 / 306 * 100vw);
+  -webkit-app-region: no-drag;
 }
 
-/* Window buttons */
 .btn-minimize {
-  left: 376px;
-  top: 43px;
+
+  left: calc((331 - 110) / 306 * 100vw);
+  top: calc((48 - 23) / 306 * 100vw);
 }
 
 .btn-window {
-  left: 417px;
-  top: 43px;
-  width: 32px;
+
+  left: calc((355 - 110) / 306 * 100vw);
+  top: calc((48 - 23) / 306 * 100vw);
+  width: calc(19 / 306 * 100vw);
 }
 
 .btn-exit {
-  left: 456px;
-  top: 43px;
+
+  left: calc((378 - 110) / 306 * 100vw);
+  top: calc((48 - 23) / 306 * 100vw);
 }
 
-/* Settings icon */
 .settings-layer {
   transform: scale(0.85);
-  transform-origin: center;
+  transform-origin: calc(310 / 512 * 100%) calc(57 / 512 * 100%);
 }
 
 .btn-settings {
-  position: absolute;
-  left: 332px;
-  top: 43px;
-
-  width: 34px;
-  height: 36px;
-
-  z-index: 150;
-  cursor: pointer;
+  left: calc((305 - 110) / 306 * 100vw);
+  top: calc((48 - 23) / 306 * 100vw);
 }
 
-/* Settings panel */
 .settings-panel {
   position: absolute;
-
-  top: 80px;
-  right: 8px;
-
+  top: calc((70 - 23) / 306 * 100vw);
+  right: calc(5 / 306 * 100vw);
   z-index: 300;
+  -webkit-app-region: no-drag;
   pointer-events: auto;
 }
 
 .settings-panel-inner {
   background: var(--color-primary);
-
-  border: 3px solid var(--color-secondary);
-  border-radius: 7px;
-
-  padding: 10px;
-
-  width: 238px;
-  max-height: 442px;
-
+  border: calc(2 / 306 * 100vw) solid var(--color-secondary);
+  border-radius: calc(4 / 306 * 100vw);
+  padding: calc(6 / 306 * 100vw);
+  width: calc(140 / 306 * 100vw);
+  max-height: calc(260 / 306 * 100vw);
   overflow-y: auto;
   scrollbar-width: none;
-
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: calc(4 / 306 * 100vw);
 }
 
 .settings-label {
   font-family: 'Rainyhearts', monospace;
-  font-size: 19px;
+  font-size: calc(11 / 306 * 100vw);
   color: var(--color-panel-text);
   white-space: nowrap;
 }
@@ -192,7 +151,7 @@ body {
 .settings-theme-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: calc(4 / 306 * 100vw);
 }
 
 .settings-dropdown {
@@ -201,22 +160,15 @@ body {
 
 .settings-dropdown-trigger {
   width: 100%;
-
   font-family: 'Rainyhearts', monospace;
-  font-size: 17px;
-
+  font-size: calc(10 / 306 * 100vw);
   background: var(--color-primary);
-
-  border: 2px solid var(--color-panel-text);
-  border-radius: 3px;
-
+  border: calc(1 / 306 * 100vw) solid var(--color-panel-text);
+  border-radius: calc(2 / 306 * 100vw);
   color: var(--color-panel-text);
-
-  padding: 5px 10px;
-
+  padding: calc(3 / 306 * 100vw) calc(6 / 306 * 100vw);
   cursor: pointer;
   outline: none;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -229,11 +181,9 @@ body {
 }
 
 .settings-dropdown-chevron {
-  font-size: 17px;
+  font-size: calc(10 / 306 * 100vw);
   line-height: 1;
-
-  margin-left: 7px;
-
+  margin-left: calc(4 / 306 * 100vw);
   transition: transform 0.1s ease;
 }
 
