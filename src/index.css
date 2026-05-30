@@ -11,12 +11,26 @@
 }
 
 html,
-body,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #1a0f1a;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #root {
   margin: 0;
   padding: 0;
   overflow: hidden;
   background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
