@@ -1,10 +1,10 @@
 .player {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 306px;
+  height: 497px;
   overflow: hidden;
-  border-radius: calc(5 / 306 * 100vw); /* match frame's pixel-art rounded corners */
-  clip-path: inset(0 0 0 calc(3 / 306 * 100vw));
+  border-radius: 5px; /* match frame's pixel-art rounded corners */
+  clip-path: inset(0 0 0 3px);
   --color-title: #78364F;
   --color-primary: #5a3a4a;
   --color-secondary: #8a6a7a;
@@ -21,15 +21,12 @@
 
 .layer {
   position: absolute;
-  /* All values based on vw so everything scales from one reference.
-     Canvas is 526x526, visible frame is 306x497.
-     Image size: 526/306 * 100vw = 171.9vw
-     Left offset: 110/306 * 100vw = 35.95vw
-     Top offset: 23/306 * 100vw = 7.52vw */
-  top: calc(-23 / 306 * 100vw); /* crop at bow top */
-  left: -35.95vw;
-  width: 171.9vw;
-  height: 171.9vw;
+  /* Fixed px layout: canvas 526x526, visible frame 306x497.
+     Image size: 526px | Left offset: -110px | Top offset: -23px */
+  top: -23px; /* crop at bow top */
+  left: -110.01px;
+  width: 526.01px;
+  height: 526.01px;
   image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
@@ -43,10 +40,10 @@
 
 .window-title {
   position: absolute;
-  left: calc((134 - 110) / 306 * 100vw);
-  top: calc((50 - 23) / 306 * 100vw);
+  left: calc((134 - 110) / 306 * 306px);
+  top: calc((50 - 23) / 306 * 306px);
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(20 / 306 * 100vw);
+  font-size: 20px;
   color: var(--color-title);
   z-index: 50;
   pointer-events: none;
@@ -56,10 +53,10 @@
 /* Invisible drag region for moving the frameless window */
 .drag-region {
   position: absolute;
-  top: calc(8 / 306 * 100vw); /* start below the bow, at the frame border */
+  top: 8px; /* start below the bow, at the frame border */
   left: 0;
   width: 100%;
-  height: calc(50 / 306 * 100vw); /* top area of frame for dragging */
+  height: 50px; /* top area of frame for dragging */
   z-index: 100;
   -webkit-app-region: drag;
 
@@ -68,8 +65,8 @@
 /* Custom resize handles at frame corners (below bow) */
 .resize-handle {
   position: absolute;
-  width: calc(12 / 306 * 100vw);
-  height: calc(12 / 306 * 100vw);
+  width: 12px;
+  height: 12px;
   z-index: 200;
 
   -webkit-app-region: no-drag;
@@ -81,31 +78,31 @@
 /* Y relative to 497-tall visible frame: (canvasY - 23) / 497 */
 .btn {
   position: absolute;
-  width: calc(20 / 306 * 100vw);
-  height: calc(21 / 306 * 100vw);
+  width: 20px;
+  height: 21px;
   z-index: 150;
   cursor: pointer;
-  border-radius: calc(4 / 306 * 100vw);
+  border-radius: 4px;
   -webkit-app-region: no-drag;
 }
 
 .btn-minimize {
 
-  left: calc((331 - 110) / 306 * 100vw);
-  top: calc((48 - 23) / 306 * 100vw);
+  left: calc((331 - 110) / 306 * 306px);
+  top: calc((48 - 23) / 306 * 306px);
 }
 
 .btn-window {
 
-  left: calc((355 - 110) / 306 * 100vw);
-  top: calc((48 - 23) / 306 * 100vw);
-  width: calc(19 / 306 * 100vw);
+  left: calc((355 - 110) / 306 * 306px);
+  top: calc((48 - 23) / 306 * 306px);
+  width: 19px;
 }
 
 .btn-exit {
 
-  left: calc((378 - 110) / 306 * 100vw);
-  top: calc((48 - 23) / 306 * 100vw);
+  left: calc((378 - 110) / 306 * 306px);
+  top: calc((48 - 23) / 306 * 306px);
 }
 
 .settings-layer {
@@ -114,14 +111,14 @@
 }
 
 .btn-settings {
-  left: calc((305 - 110) / 306 * 100vw);
-  top: calc((48 - 23) / 306 * 100vw);
+  left: calc((305 - 110) / 306 * 306px);
+  top: calc((48 - 23) / 306 * 306px);
 }
 
 .settings-panel {
   position: absolute;
-  top: calc((70 - 23) / 306 * 100vw);
-  right: calc(5 / 306 * 100vw);
+  top: calc((70 - 23) / 306 * 306px);
+  right: 5px;
   z-index: 300;
   -webkit-app-region: no-drag;
   pointer-events: auto;
@@ -129,21 +126,21 @@
 
 .settings-panel-inner {
   background: var(--color-primary);
-  border: calc(2 / 306 * 100vw) solid var(--color-secondary);
-  border-radius: calc(4 / 306 * 100vw);
-  padding: calc(6 / 306 * 100vw);
-  width: calc(140 / 306 * 100vw);
-  max-height: calc(260 / 306 * 100vw);
+  border: 2px solid var(--color-secondary);
+  border-radius: 4px;
+  padding: 6px;
+  width: 140px;
+  max-height: 260px;
   overflow-y: auto;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
-  gap: calc(4 / 306 * 100vw);
+  gap: 4px;
 }
 
 .settings-label {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(11 / 306 * 100vw);
+  font-size: 11px;
   color: var(--color-panel-text);
   white-space: nowrap;
 }
@@ -151,7 +148,7 @@
 .settings-theme-row {
   display: flex;
   flex-wrap: wrap;
-  gap: calc(4 / 306 * 100vw);
+  gap: 4px;
 }
 
 .settings-dropdown {
@@ -161,12 +158,12 @@
 .settings-dropdown-trigger {
   width: 100%;
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: var(--color-primary);
-  border: calc(1 / 306 * 100vw) solid var(--color-panel-text);
-  border-radius: calc(2 / 306 * 100vw);
+  border: 1px solid var(--color-panel-text);
+  border-radius: 2px;
   color: var(--color-panel-text);
-  padding: calc(3 / 306 * 100vw) calc(6 / 306 * 100vw);
+  padding: 3px 6px;
   cursor: pointer;
   outline: none;
   display: flex;
@@ -181,9 +178,9 @@
 }
 
 .settings-dropdown-chevron {
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   line-height: 1;
-  margin-left: calc(4 / 306 * 100vw);
+  margin-left: 4px;
   transition: transform 0.1s ease;
 }
 
@@ -194,22 +191,22 @@
 .settings-dropdown-menu {
   /* Position is set inline via portal — top/left/width come from JS */
   background: var(--color-primary);
-  border: calc(1 / 306 * 100vw) solid var(--color-panel-text);
-  border-radius: calc(2 / 306 * 100vw);
+  border: 1px solid var(--color-panel-text);
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   z-index: 1000;
   overflow: hidden;
-  box-shadow: 0 calc(2 / 306 * 100vw) calc(6 / 306 * 100vw) rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .settings-dropdown-item {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: none;
   border: none;
   color: var(--color-panel-text);
-  padding: calc(3 / 306 * 100vw) calc(6 / 306 * 100vw);
+  padding: 3px 6px;
   cursor: pointer;
   text-align: left;
 }
@@ -222,12 +219,12 @@
 
 .settings-theme-btn {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: none;
-  border: calc(1 / 306 * 100vw) solid var(--color-panel-text);
-  border-radius: calc(2 / 306 * 100vw);
+  border: 1px solid var(--color-panel-text);
+  border-radius: 2px;
   color: var(--color-panel-text);
-  padding: calc(3 / 306 * 100vw) calc(6 / 306 * 100vw);
+  padding: 3px 6px;
   cursor: pointer;
 }
 
@@ -238,21 +235,21 @@
 
 .settings-input {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: rgba(0, 0, 0, 0.3);
-  border: calc(1 / 306 * 100vw) solid var(--color-panel-text);
-  border-radius: calc(2 / 306 * 100vw);
+  border: 1px solid var(--color-panel-text);
+  border-radius: 2px;
   color: var(--color-panel-text);
-  padding: calc(3 / 306 * 100vw) calc(4 / 306 * 100vw);
+  padding: 3px 4px;
   outline: none;
 }
 
 .settings-playlist-list {
-  max-height: calc(70 / 306 * 100vw);
+  max-height: 70px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: calc(2 / 306 * 100vw);
+  gap: 2px;
   scrollbar-width: none;
 }
 
@@ -262,17 +259,17 @@
 
 .settings-playlist-item {
   width: 100%;
-  height: calc(22 / 306 * 100vw);
+  height: 22px;
   flex-shrink: 0;
   box-sizing: border-box;
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(12 / 306 * 100vw);
+  font-size: 12px;
   line-height: 1;
   background: rgba(255, 255, 255, 0.05);
   border: none;
-  border-radius: calc(2 / 306 * 100vw);
+  border-radius: 2px;
   color: var(--color-panel-text);
-  padding: 0 calc(6 / 306 * 100vw);
+  padding: 0 6px;
   cursor: pointer;
   text-align: left;
   display: flex;
@@ -293,17 +290,17 @@
 
 .settings-error {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(9 / 306 * 100vw);
+  font-size: 9px;
   color: #ff6b6b;
 }
 
 /* Volume hover zone — covers icon + bar area as one block */
 .volume-hover-zone {
   position: absolute;
-  left: calc((363 - 110) / 306 * 100vw);
-  bottom: calc((512 - 412 - 23) / 306 * 100vw);
-  width: calc(20 / 306 * 100vw);
-  height: calc(18 / 306 * 100vw);
+  left: calc((363 - 110) / 306 * 306px);
+  bottom: calc((512 - 412 - 23) / 306 * 306px);
+  width: 20px;
+  height: 18px;
   z-index: 155;
   -webkit-app-region: no-drag;
 }
@@ -312,21 +309,21 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  width: calc(20 / 306 * 100vw);
-  height: calc(20 / 306 * 100vw);
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
 
 .volume-hover-zone.expanded {
-  height: calc((420 - 338 + 25) / 306 * 100vw);
+  height: calc((420 - 338 + 25) / 306 * 306px);
 }
 
 .volume-bar-area {
   position: absolute;
-  left: calc((357 - 355) / 306 * 100vw);
-  top: calc(5 / 306 * 100vw);
-  width: calc(10 / 306 * 100vw);
-  height: calc((420 - 338) / 306 * 100vw);
+  left: calc((357 - 355) / 306 * 306px);
+  top: 5px;
+  width: 10px;
+  height: calc((420 - 338) / 306 * 306px);
   cursor: pointer;
 }
 
@@ -337,10 +334,10 @@
 /* Shuffle/repeat click target */
 .btn-playmode {
   position: absolute;
-  left: calc((139 - 110) / 306 * 100vw);
-  top: calc((425 - 23) / 306 * 100vw);
-  width: calc(25 / 306 * 100vw);
-  height: calc(20 / 306 * 100vw);
+  left: calc((139 - 110) / 306 * 306px);
+  top: calc((425 - 23) / 306 * 306px);
+  width: 25px;
+  height: 20px;
   z-index: 150;
   cursor: pointer;
   -webkit-app-region: no-drag;
@@ -358,10 +355,10 @@
 /* Debug overlay for volume bar seek area (absolute positioned to match) */
 .volume-bar-area-debug {
   position: absolute;
-  left: calc((357 - 110) / 306 * 100vw);
-  top: calc((345 - 23) / 306 * 100vw);
-  width: calc(10 / 306 * 100vw);
-  height: calc((420 - 338) / 306 * 100vw);
+  left: calc((357 - 110) / 306 * 306px);
+  top: calc((345 - 23) / 306 * 306px);
+  width: 10px;
+  height: calc((420 - 338) / 306 * 306px);
   background: rgba(0, 0, 255, 0.25);
   border: 1px solid rgba(0, 0, 255, 0.6);
   z-index: 999;
@@ -370,10 +367,10 @@
 /* Progress bar seek target */
 .progress-seek {
   position: absolute;
-  left: calc((140 - 110) / 306 * 100vw);
-  top: calc((469 - 23) / 306 * 100vw);
-  width: calc(241 / 306 * 100vw);
-  height: calc(6 / 306 * 100vw);
+  left: calc((140 - 110) / 306 * 306px);
+  top: calc((469 - 23) / 306 * 306px);
+  width: 241px;
+  height: 6px;
   z-index: 150;
   cursor: pointer;
   -webkit-app-region: no-drag;
@@ -382,31 +379,31 @@
 
 /* Playback control click targets */
 .btn-prev {
-  left: calc((172 - 110) / 306 * 100vw);
-  top: calc((418 - 23) / 306 * 100vw);
-  width: calc(44 / 306 * 100vw);
-  height: calc(31 / 306 * 100vw);
+  left: calc((172 - 110) / 306 * 306px);
+  top: calc((418 - 23) / 306 * 306px);
+  width: 44px;
+  height: 31px;
 }
 
 .btn-play {
-  left: calc((240 - 110) / 306 * 100vw);
-  top: calc((418 - 23) / 306 * 100vw);
-  width: calc(44 / 306 * 100vw);
-  height: calc(31 / 306 * 100vw);
+  left: calc((240 - 110) / 306 * 306px);
+  top: calc((418 - 23) / 306 * 306px);
+  width: 44px;
+  height: 31px;
 }
 
 .btn-next {
-  left: calc((310 - 110) / 306 * 100vw);
-  top: calc((418 - 23) / 306 * 100vw);
-  width: calc(44 / 306 * 100vw);
-  height: calc(31 / 306 * 100vw);
+  left: calc((310 - 110) / 306 * 306px);
+  top: calc((418 - 23) / 306 * 306px);
+  width: 44px;
+  height: 31px;
 }
 
 /* Now playing section — album art + text */
 .now-playing {
   position: absolute;
-  left: calc((195 - 110) / 306 * 100vw);
-  top: calc((355 - 23) / 306 * 100vw);
+  left: calc((195 - 110) / 306 * 306px);
+  top: calc((355 - 23) / 306 * 306px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -416,9 +413,9 @@
 
 .record-player {
   position: absolute;
-  width: calc(200 / 306 * 100vw);
+  width: 200px;
   left: 50%;
-  top: calc(120 / 306 * 100vw);
+  top: 120px;
   transform: translateX(-50%);
   image-rendering: pixelated;
   pointer-events: none;
@@ -444,26 +441,26 @@
 
 @keyframes slide-out {
   0% { transform: translate(-50%, 0); }
-  100% { transform: translate(calc(-50% - 60vw), 20vw); }
+  100% { transform: translate(calc(-50% - 183.6px), 61.2px); }
 }
 
 @keyframes slide-in {
-  0% { transform: translate(calc(-50% - 60vw), 20vw); }
+  0% { transform: translate(calc(-50% - 183.6px), 61.2px); }
   100% { transform: translate(-50%, 0); }
 }
 
 .album-frame-layer {
-  left: calc(-35.95vw - 1 / 306 * 100vw);
-  top: calc(-23 / 306 * 100vw);
+  left: calc(-110.01px - 1 / 306 * 306px);
+  top: -23px;
   z-index: 45;
 }
 
 .album-mask {
   position: absolute;
-  left: calc((146 - 110) / 306 * 100vw);
-  top: calc((356 - 23) / 306 * 100vw);
-  width: calc(42 / 306 * 100vw);
-  height: calc(42 / 306 * 100vw);
+  left: calc((146 - 110) / 306 * 306px);
+  top: calc((356 - 23) / 306 * 306px);
+  width: 42px;
+  height: 42px;
   clip-path: url(#album-mask);
   overflow: hidden;
   z-index: 40;
@@ -484,17 +481,17 @@
 
 .now-playing-label {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(12 / 306 * 100vw);
+  font-size: 12px;
   color: var(--color-secondary);
 }
 
 .track-title {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(24 / 306 * 100vw);
+  font-size: 24px;
   color: var(--color-primary);
   white-space: nowrap;
   overflow: hidden;
-  max-width: calc(170 / 306 * 100vw);
+  max-width: 170px;
 }
 
 .marquee-measure {
@@ -510,7 +507,7 @@
 }
 
 .marquee-gap {
-  margin-left: calc(28 / 306 * 100vw);
+  margin-left: 28px;
 }
 
 @keyframes marquee {
@@ -520,68 +517,68 @@
 
 .track-artist {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(14 / 306 * 100vw);
+  font-size: 14px;
   color: var(--color-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(200 / 306 * 100vw);
+  max-width: 200px;
 }
 
 /* Time display — elapsed left, remaining right */
 .time-display {
   position: absolute;
-  left: calc((136 - 110) / 306 * 100vw);
-  top: calc((479 - 23) / 306 * 100vw);
-  width: calc((382 - 136) / 306 * 100vw);
+  left: calc((136 - 110) / 306 * 306px);
+  top: calc((479 - 23) / 306 * 306px);
+  width: calc((382 - 136) / 306 * 306px);
   display: flex;
   justify-content: space-between;
   z-index: 50;
   pointer-events: none;
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(12 / 306 * 100vw);
+  font-size: 12px;
   color: var(--color-primary);
 }
 
 .resize-handle.top-left {
-  top: calc(7 / 306 * 100vw); /* at frame border, not bow */
+  top: 7px; /* at frame border, not bow */
   left: 0;
   cursor: nwse-resize;
-  border-top-left-radius: calc(5 / 306 * 100vw);
+  border-top-left-radius: 5px;
 }
 
 .resize-handle.top-right {
-  top: calc(7 / 306 * 100vw);
+  top: 7px;
   right: 0;
   cursor: nesw-resize;
-  border-top-right-radius: calc(5 / 306 * 100vw);
+  border-top-right-radius: 5px;
 }
 
 .resize-handle.bottom-left {
   bottom: 0;
   left: 0;
   cursor: nesw-resize;
-  border-bottom-left-radius: calc(5 / 306 * 100vw);
+  border-bottom-left-radius: 5px;
 }
 
 .resize-handle.bottom-right {
   bottom: 0;
   right: 0;
   cursor: nwse-resize;
-  border-bottom-right-radius: calc(5 / 306 * 100vw);
+  border-bottom-right-radius: 5px;
 }
 
 /* ── Spotify panel ───────────────────────────────────────── */
 
 /* Small toggle button positioned near the window controls */
 .btn-spotify-toggle {
-  left: calc((307 - 110) / 306 * 100vw);
-  top: calc((48 - 23) / 306 * 100vw);
-  width: calc(20 / 306 * 100vw);
-  height: calc(20 / 306 * 100vw);
+  left: calc((307 - 110) / 306 * 306px);
+  top: calc((48 - 23) / 306 * 306px);
+  width: 20px;
+  height: 20px;
   opacity: 0.6;
   transition: opacity 0.15s;
-  background: url('../assets/spotify_icon.svg') center / calc(14 / 306 * 100vw) no-repeat;
+  background: url('../assets/spotify_icon.svg') center / 14px no-repeat;
 }
 
 .btn-spotify-toggle:hover {
@@ -592,8 +589,8 @@
 /* Dropdown panel for Spotify connection */
 .spotify-panel {
   position: absolute;
-  top: calc((75 - 23) / 306 * 100vw);
-  right: calc((526 - 400 - 110) / 306 * 100vw);
+  top: calc((75 - 23) / 306 * 306px);
+  right: calc((526 - 400 - 110) / 306 * 306px);
   z-index: 300;
   -webkit-app-region: no-drag;
   pointer-events: auto;
@@ -601,31 +598,31 @@
 
 .spotify-panel-inner {
   background: #2a1a2a;
-  border: calc(2 / 306 * 100vw) solid #5a3a4a;
-  border-radius: calc(4 / 306 * 100vw);
-  padding: calc(8 / 306 * 100vw);
-  min-width: calc(120 / 306 * 100vw);
+  border: 2px solid #5a3a4a;
+  border-radius: 4px;
+  padding: 8px;
+  min-width: 120px;
   display: flex;
   flex-direction: column;
-  gap: calc(5 / 306 * 100vw);
+  gap: 5px;
   image-rendering: pixelated;
 }
 
 .spotify-label {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(11 / 306 * 100vw);
+  font-size: 11px;
   color: #8a6a7a;
   white-space: nowrap;
 }
 
 .spotify-input {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: #1a0e1a;
-  border: calc(1 / 306 * 100vw) solid #5a3a4a;
-  border-radius: calc(2 / 306 * 100vw);
+  border: 1px solid #5a3a4a;
+  border-radius: 2px;
   color: #d4a4b4;
-  padding: calc(3 / 306 * 100vw) calc(4 / 306 * 100vw);
+  padding: 3px 4px;
   outline: none;
   width: 100%;
   box-sizing: border-box;
@@ -637,17 +634,17 @@
 
 .spotify-btn-row {
   display: flex;
-  gap: calc(4 / 306 * 100vw);
+  gap: 4px;
 }
 
 .spotify-btn {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(10 / 306 * 100vw);
+  font-size: 10px;
   background: #5a3a4a;
   border: none;
-  border-radius: calc(2 / 306 * 100vw);
+  border-radius: 2px;
   color: #f4d4e4;
-  padding: calc(2 / 306 * 100vw) calc(6 / 306 * 100vw);
+  padding: 2px 6px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -671,7 +668,7 @@
 
 .spotify-error {
   font-family: 'Rainyhearts', monospace;
-  font-size: calc(9 / 306 * 100vw);
+  font-size: 9px;
   color: #c44;
   word-break: break-word;
 }
