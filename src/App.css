@@ -1,10 +1,11 @@
 .player {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 520px;
+  height: 520px;
   overflow: hidden;
-  border-radius: calc(5 / 306 * 100vw); /* match frame's pixel-art rounded corners */
-  clip-path: inset(0 0 0 calc(3 / 306 * 100vw));
+
+  border-radius: 8px;
+
   --color-title: #78364F;
   --color-primary: #5a3a4a;
   --color-secondary: #8a6a7a;
