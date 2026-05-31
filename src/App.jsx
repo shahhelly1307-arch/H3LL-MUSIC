@@ -29,18 +29,19 @@ import starSelected from '../assets/star_selected.png';
 // --- BROWSER COMPATIBILITY FALLBACK ---
 if (!window.cupid) {
   window.cupid = {
-    // ... baaki methods
-    getLocalPlaylist: async () => { 
-        console.log("Fetching mock data from /audio/playlist.json");
-        try { 
-            const res = await fetch('/audio/playlist.json'); 
-            return await res.json(); 
-        } catch (e) { 
-            console.error("Fetch failed, returning demo tracks");
-            return [{ id: 1, title: 'Demo Song', artist: 'Artist', path: 'test.mp3' }]; 
-        } 
+    getLocalPlaylist: async () => {
+      const res = await fetch('/audio/playlist.json');
+      const text = await res.text();
+      // Strip markdown fences if accidentally present
+      const clean = text.replace(/^```[a-z]*\n?/m, '').replace(/\n?```$/m, '').trim();
+      return JSON.parse(clean);
     },
-    // ...
+    getLocalAudioPath: (filename) => `/audio/${filename}`,
+    minimize: () => {},
+    maximize: () => {},
+    close: () => {},
+    resize: () => {},
+    startDrag: () => {},
   };
 }
 
@@ -239,21 +240,15 @@ export default function App() {
   const [localTracks, setLocalTracks] = useState([]);
 
     const loadLocalPlaylist = useCallback(async () => {
-    // 1. Agar Electron environment hai (Desktop App)
-    if (window.cupid?.getLocalPlaylist) {
-      try {
-        const tracks = await window.cupid.getLocalPlaylist();
-        setLocalTracks(Array.isArray(tracks) ? tracks : []);
-      } catch (err) {
-        console.error('Failed to load local playlist:', err);
+    try {
+      const tracks = await window.cupid.getLocalPlaylist();
+      if (Array.isArray(tracks) && tracks.length > 0) {
+        setLocalTracks(tracks);
+      } else {
+        console.warn('Playlist empty or invalid');
       }
-    } else {
-      // 2. Agar Browser hai, toh Mock Data load karein taaki player khali na dikhe
-      console.warn("Running in Browser: Loading mock tracks.");
-      setLocalTracks([
-        { id: 1, title: 'Sample Track 1', artist: 'Artist A', path: '/audio/test.mp3' },
-        { id: 2, title: 'Sample Track 2', artist: 'Artist B', path: '/audio/test2.mp3' }
-      ]);
+    } catch (err) {
+      console.error('Failed to load playlist:', err);
     }
   }, []);
 
@@ -551,7 +546,7 @@ export default function App() {
         alt=""
         draggable={false}
         style={{
-          transform: `translateX(calc(-3 / 306 * 100vw + ${(hoverProgress ?? progress) * (226 / 512) * 171.9}vw))`,
+          transform: `translateX(${-3 + (hoverProgress ?? progress) * (226 / 512) * 526}px)`,
         }}
       />
 
