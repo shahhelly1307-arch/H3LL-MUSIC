@@ -30,13 +30,14 @@ import starSelected from '../assets/star_selected.png';
 if (!window.cupid) {
   window.cupid = {
     getLocalPlaylist: async () => {
-      const res = await fetch('/audio/playlist.json');
+      // With publicDir: 'audio', files in audio/ are served at root /
+      const res = await fetch('/playlist.json');
       const text = await res.text();
       // Strip markdown fences if accidentally present
       const clean = text.replace(/^```[a-z]*\n?/m, '').replace(/\n?```$/m, '').trim();
       return JSON.parse(clean);
     },
-    getLocalAudioPath: (filename) => `/audio/${filename}`,
+    getLocalAudioPath: (filename) => `/${filename}`,
     minimize: () => {},
     maximize: () => {},
     close: () => {},
